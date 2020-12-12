@@ -1,6 +1,11 @@
-# An exploration of cross-cultural research on bias against athiests
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+# An exploration of cross-cultural research on bias against athiests #
 
-## Background
+## Background ##
 
 Researchers ran a wide (n=*3256*) study across *13* diverse countries in order to examine bias for and against atheists on moral grounds. The findings were, broadly, that in all but the most secular societies, believers and nonbelievers alike were more likely to commit the "conjunction fallacy" when performing a straightforward logic task that involved amoral nonbelievers (as opposed to moral believers and the other possible permutations). 
 
@@ -45,7 +50,7 @@ The experiment was executed over several months of data collection across countr
 
 One last interesting point. Instead of measuring and comparing relative error rates, Gervais et al. instead compared Bayesian *predicted* error rates. That is, the probability of any person committing the conjunction fallacy in either case. They did this because the actual error rates vary across countries. Some countries are more likely than others to get tripped up. Since the only thing they wanted to demonstrate in this project was bias for or against atheists, they used these bayesian methods to normalize and compare bias across countries. 
 
-### My analysis
+## EDA ##
 
 For the sake of simplicity, I'll be using the [aggregate dataset](https://mfr.osf.io/render?url=https://osf.io/2nkeu/?direct%26mode=render%26action=download%26mode=render) from OSF called *Aggregate Data.csv*. 
 
@@ -66,4 +71,10 @@ This includes the following columns:
 | RelID       | Religious affiliation<br>1: Christian <br>2: Christian (Baptist) <br>3: Christian (Other) <br>4: Hindu<br>5: Buddhist<br>6: Muslim <br>7: Jewish<br>8: Sikh <br>9: None <br>10: Atheist <br>11: Agnostic <br>Free response string: Other (Please specify)<br>(*Note: China and Hong Kong used slightly different religious ID options. Among other things, Atheist/agnostic was an option, rather than atheist or agnostic as separate choices. Singapore used a “freethinker” category instead of none, atheist, and agnostic. UAE used “Non-Religious Other philosophy not listed here” category.*) |
 
 
+---
 
+The exploration of this dataset is found in *scripts/eda.r*
+
+## Review ##
+
+What were the findings? These are summarized in */paper/paper.pdf*, which was generated from *paper.md*.
