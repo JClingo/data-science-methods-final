@@ -1,11 +1,11 @@
-Package: 
+Package: Final
 Version: 0.0.0.9900
-Title: 
+Title: Data Science Methods Final
 Author: Joshua Clingo
 Maintainer: Joshua Clingo <joshuaclingo@gmail.com>
 Depends: R (>= 4.0.0)
-Description: 
-License: 
+Description: An exploration of cross-cultural research on bias against atheists
+License: MIT
 Imports: 
     tidyverse,
     knitr,

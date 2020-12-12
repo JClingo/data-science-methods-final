@@ -10,7 +10,7 @@ git config --global user.name "Joshua Clingo"
 
 git clone -b gh-pages https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git temp
 cd temp
-mv -f ../scripts/OUTPUTFILE.html index.html
+mv -f ../paper/paper.html index.html
 git add index.html
-git commit -m "Update the reproduced analysis" || true
+git commit -m "Updated the reproduced analysis" || true
 git push origin gh-pages

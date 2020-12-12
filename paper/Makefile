@@ -1,6 +1,6 @@
 all: pdf
 
-pdf: paper.odf
+pdf: paper.pdf
 paper.pdf: paper.md
 	pandoc header.yaml paper.md \
                      -o paper.pdf \
@@ -12,6 +12,13 @@ docx: paper.docx
 paper.docx: paper.md
 	pandoc header.yaml paper.md \
                     -o paper.docx \
+                    --filter=pandoc-citeproc \
+                    --filter=pandoc-crossref
+                    
+html: paper.html
+paper.html: paper.md
+	pandoc header.yaml paper.md \
+                    -o paper.html \
                     --filter=pandoc-citeproc \
                     --filter=pandoc-crossref
 

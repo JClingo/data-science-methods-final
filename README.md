@@ -3,7 +3,7 @@ output:
   html_document: default
   pdf_document: default
 ---
-# An exploration of cross-cultural research on bias against athiests #
+# An exploration of cross-cultural research on bias against atheists #
 
 ## Background ##
 

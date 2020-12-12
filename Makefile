@@ -6,8 +6,8 @@ PAPER := paper
 LASTOUT := $(OUT)/02_plot.png  # Last output from the last file of the analysis pipeline
 
 ## Primary targets: all; (analysis) pipe and paper
-.PHONY: all pipe paper
-all: pipe paper
+.PHONY: all pipe paper paper_html
+all: pipe paper paper_html
 
 
 ## Analysis pipe ----
@@ -29,6 +29,13 @@ $(PAPER)/paper.pdf: $(PAPER)/paper.md \
                     $(PAPER)/refs.json \
                     $(LASTOUT)
 	cd $(PAPER); pandoc paper.md -o paper.pdf --citeproc
+	
+## Paper HTML ----
+paper_html: $(PAPER)/paper.html
+$(PAPER)/paper.html: $(PAPER)/paper.md \
+                    $(PAPER)/refs.json \
+                    $(LASTOUT)
+	cd $(PAPER); pandoc paper.md -o paper.html --citeproc
 
 
 ## Cleaning ----
@@ -37,6 +44,7 @@ madedata := $(filter-out $(wildcard $(DATA)/00_*), $(wildcard $(DATA)/*))
 made := $(wildcard $(OUT)/*) \
         $(SCRIPTS)/02_analysis.html \
         $(madedata) \
-        $(PAPER)/paper.pdf        
+        $(PAPER)/paper.pdf \
+        $(PAPER)/paper.html \ 
 clean:
 	rm $(made)
