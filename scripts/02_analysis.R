@@ -17,7 +17,6 @@
 library(tidyverse)
 library(knitr)
 library(sessioninfo)
-library(rethinking)
 
 data_dir = file.path('..', 'data')
 out_dir = file.path('..', 'out')
