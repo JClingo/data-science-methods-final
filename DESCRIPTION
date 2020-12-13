@@ -10,4 +10,5 @@ Imports:
     tidyverse,
     knitr,
     sessioninfo,
-    rmarkdown
+    rmarkdown,
+    rethinking
