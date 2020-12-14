@@ -1,3 +1,15 @@
+#' ---
+#' title: Data processing of 'An exploration of cross-cultural research on bias against atheists' 
+#' author: "Joshua Clingo"
+#' email: "jclingo@ucmerced.edu"
+#' 
+#' output:
+#'   rmarkdown::html_document:
+#'     toc: false
+#'     code_folding: "hide"
+#' ---
+
+
 ## This script cleans the data and stores it for later analysis
 
 #+ setup
@@ -56,6 +68,8 @@ dataf$GenFem_z = scale(dataf$GenFem, scale=T, center=T)[,]
 #' 
 
 ## All in all, we've lost a several hundred rows and the results from China (mainland), which used nonstandard religious IDs
+
+summary(dataf)
 
 ## Write output ----
 saveRDS(dataf, file.path(data_dir, '01_data.Rds'))
