@@ -393,7 +393,9 @@ dataf %>%
 dataf %>% 
     filter(Country != 'Finland') %>% 
     ggplot(aes(x=BiG100)) + 
-    geom_histogram()
+    geom_histogram(binwidth = 5)
+
+ggsave(file.path(out_dir, '02_plot_big100.png'), width = 6, height = 6, scale = 1.5)
 
 #' Much better, though still a bit secular to be globally representative. At 
 #' the very least, now it doesn't look like the researchers screened out 

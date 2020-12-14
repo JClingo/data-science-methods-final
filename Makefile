@@ -3,7 +3,7 @@ DATA := data
 SCRIPTS := scripts
 OUT := out
 PAPER := paper
-LASTOUT := $(OUT)/02_plot.png  # Last output from the last file of the analysis pipeline
+LASTOUT := $(OUT)/02_plot_big100.png  # Last output from the last file of the analysis pipeline
 
 ## Primary targets: all; (analysis) pipe and paper
 .PHONY: all pipe paper paper_html
@@ -13,7 +13,7 @@ all: pipe paper paper_html
 ## Analysis pipe ----
 pipe: $(LASTOUT)
 
-$(OUT)/02_plot.png: $(SCRIPTS)/02_analysis.R \
+$(OUT)/02_plot_big100.png: $(SCRIPTS)/02_analysis.R \
                     $(DATA)/01_data.Rds
 	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
 
