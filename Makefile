@@ -3,7 +3,7 @@ DATA := data
 SCRIPTS := scripts
 OUT := out
 PAPER := paper
-LASTOUT := $(OUT)/02_plot_big100.png  # Last output from the last file of the analysis pipeline
+LASTOUT := $(OUT)/02_plot_big100_sans_finland.png  # Last output from the last file of the analysis pipeline
 
 ## Primary targets: all; (analysis) pipe and paper
 .PHONY: all pipe paper paper_html
@@ -14,13 +14,36 @@ all: pipe paper paper_html
 pipe: $(LASTOUT)
 
 $(OUT)/02_plot_big100.png: $(SCRIPTS)/02_analysis.R \
-                    $(DATA)/01_data.Rds
+                $(DATA)/01_data.Rds
 	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
 
-# Exercise for the reader
+$(OUT)/02_plot_education_v_error_finland.png: $(SCRIPTS)/02_analysis.R \
+                $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
+	
+$(OUT)/02_plot_ses_v_education_finland.png: $(SCRIPTS)/02_analysis.R \
+                $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
+
+$(OUT)/02_plot_ses_v_error_finland.png: $(SCRIPTS)/02_analysis.R \
+                $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
+
+$(OUT)/02_plot_big100_v_age.png: $(SCRIPTS)/02_analysis.R \
+                $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
+	
+$(OUT)/02_plot_age_v_education.png: $(SCRIPTS)/02_analysis.R \
+                $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
+
+$(OUT)/02_plot_big100_sans_finland.png: $(SCRIPTS)/02_analysis.R \
+                $(DATA)/01_data.Rds
+	cd $(SCRIPTS); Rscript -e "rmarkdown::render('02_analysis.R')"
+
+## Data ----
 $(DATA)/01_data.Rds: $(SCRIPTS)/01_data.R
 	cd $(SCRIPTS); Rscript 01_data.R
-
 
 
 ## Paper ----

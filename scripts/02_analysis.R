@@ -68,9 +68,18 @@ summaryf = dataf_finland %>%
     
 with(summaryf, cor(GenFem, ErrorRate))
 
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+summaryf = dataf_finland %>% 
+    group_by(GenFem) %>% 
+    summarize(
+        ErrorRate = mean(Error),
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(format = 'latex', digits = 4, col.names = c('Error Rate', 'Gender')) %>%
+    write_lines(file.path(out_dir, '02_table_gender_finland.tex'))
+
 
 #' Women significantly more likely to commit the error
 #' We'll keep this in mind in case we want to shine a spotlight on it
@@ -82,13 +91,21 @@ summaryf = dataf_finland %>%
         ErrorRate = mean(Error),
         Education = Education) %>% 
     ungroup()
-
-with(summaryf, cor(Education, ErrorRate))
-
 summaryf %>% 
     ggplot(aes(Education, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "Education versus error rate - Finland",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
+
+ggsave(file.path(out_dir, '02_plot_education_v_error_finland.png'))
 
 #' Education level is also significant, though that isn't as surprising, given
 #' the fact that the test is, at its heart, a basic logic test and education
@@ -106,8 +123,19 @@ with(summaryf, cor(SES, ErrorRate))
 
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate - Finland",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
+
+ggsave(file.path(out_dir, '02_plot_ses_v_error_finland.png'))
 
 #' Intriguingly, SES (social status) doesn't seem to follow our intuitions
 #' Those who reported being relatively well-off scored worse, which goes against
@@ -123,8 +151,19 @@ summaryf = dataf_finland %>%
 
 summaryf %>% 
     ggplot(aes(SES, Education)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus education level - Finland",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
+
+ggsave(file.path(out_dir, '02_plot_ses_v_education_finland.png'))
 
 #' Nope! This looks completely typical. More education = more subjective social
 #' status. So what's going on here?
@@ -144,11 +183,19 @@ summaryf = dataf_usa %>%
         ErrorRate = mean(Error),
         Education = Education) %>% 
     ungroup()
-
 summaryf %>% 
     ggplot(aes(Education, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "Education level versus error rate - USA",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 
 summaryf = dataf_india %>% 
     group_by(Education) %>% 
@@ -156,11 +203,19 @@ summaryf = dataf_india %>%
         ErrorRate = mean(Error),
         Education = Education) %>% 
     ungroup()
-
 summaryf %>% 
     ggplot(aes(Education, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "Education level versus error rate - India",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 
 #' `n` is much smaller but the trend is the same as we expected -- however, it's 
 #' quite weak in India (and strong in the USA)
@@ -174,8 +229,17 @@ summaryf = dataf_usa %>%
     ungroup()
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate - USA",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 
 summaryf = dataf_india %>% 
     group_by(SES) %>% 
@@ -185,8 +249,17 @@ summaryf = dataf_india %>%
     ungroup()
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate  - India",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 
 #' Interesting--very interesting
 #' Though our `n` is low, USA data kicks the trend. India confirms it.
@@ -201,8 +274,17 @@ summaryf = dataf_australia %>%
     ungroup()
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate  - Australia",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 #' Slightly positive
 
 summaryf = dataf_netherlands %>% 
@@ -213,8 +295,17 @@ summaryf = dataf_netherlands %>%
     ungroup()
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate  - Netherlands",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 #' Positive
 
 summaryf = dataf_mauritius %>% 
@@ -225,8 +316,17 @@ summaryf = dataf_mauritius %>%
     ungroup()
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate - Mauritius",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 #' Flat
 
 summaryf = dataf_uae %>% 
@@ -237,27 +337,18 @@ summaryf = dataf_uae %>%
     ungroup()
 summaryf %>% 
     ggplot(aes(SES, ErrorRate)) + 
-    geom_point() +
-    geom_smooth(method='lm')
+    geom_point(color="#F57F17") +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "SES versus error rate - UAE",
+        subtitle = "(Mean per classification)"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
 #' Negative
-
-
-#' Unfortunately, once the dust settles, it looks like we have a ton of inter-
-#' country variance. In some countries (Finland, India, Netherlands, Australia),
-#' we seem to have some number of over-confident individuals who think they are 
-#' at a higher social class than they are (given education), who reliably mess 
-#' up more than everyone else. In others (USA and UAE), the expected trend 
-#' continues. Extremely tentative, speculative conclusion--there's a cultural 
-#' difference for overrating one's abilities, given one's social standing (and 
-#' ignoring) one's educational achievements, which becomes exposed when
-#' confronted with the conjunction fallacy. So, while we can't say anything
-#' about all humans, we can at least speculate that some cultural differences
-#' seem to bring down our performance with conjunctive logic, particularly
-#' when we are asked to rate our social standing, report our education level,
-#' then perform a conjunctive logic task meant to trick us. In that sense,
-#' it's a variation on the old over-confidence warnings of our teachers and
-#' parents. 
-#' 
 
 #' Returning to gender
 #' We saw a modest effect on error rate for single country. We'll go ahead and 
@@ -268,66 +359,72 @@ summaryf = dataf_usa %>%
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(digits = 4, col.names = c('Error Rate', 'Gender'))
 # very modest (0.017) + difference
 
 summaryf = dataf_india %>% 
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(digits = 4, col.names = c('Error Rate', 'Gender'))
 # flat
 
 summaryf = dataf_australia %>% 
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(digits = 4, col.names = c('Error Rate', 'Gender')) 
 # very modest (0.025) + difference
 
 summaryf = dataf_mauritius %>% 
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(digits = 4, col.names = c('Error Rate', 'Gender'))
 # moderate (0.13) - difference (!)
 
 summaryf = dataf_netherlands %>% 
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(digits = 4, col.names = c('Error Rate', 'Gender'))
 # very modest (0.025) - difference
 
 summaryf = dataf_uae %>% 
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(digits = 4, col.names = c('Error Rate', 'Gender'))
 # very modest (0.032) - difference
 
 #' So, all in all--we have some very minor differences in different directions
@@ -344,11 +441,13 @@ summaryf = dataf %>%
     group_by(GenFem) %>% 
     summarize(
         ErrorRate = mean(Error),
-        GenFem = GenFem) %>% 
-    ungroup()
-summaryf %>% 
-    ggplot(aes(GenFem, ErrorRate)) + 
-    geom_point() 
+        Gender = ifelse(GenFem == 1, 'Female', 'Male')) %>% 
+    distinct() %>% 
+    ungroup() %>% 
+    select(-GenFem)
+summaryf %>%
+    kable(format = 'latex', digits = 4, col.names = c('Error Rate', 'Gender')) %>%
+    write_lines(file.path(out_dir, '02_table_gender_overall.tex'))
 
 #' Here we get what is essentially a flat line (-0.0075). Case closed on this
 #' one.
@@ -360,8 +459,19 @@ summaryf %>%
 
 dataf %>% 
     ggplot(aes(Age, BiG100)) +
-    geom_point() +
-    geom_smooth(method='lm', se=FALSE, color='turquoise4')
+    geom_point(color="#F57F17", alpha = 1/5) +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "BiG Score Frequencies - Overall",
+        caption = "Darker circles indicate higher frequency"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.caption = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
+ggsave(file.path(out_dir, '02_plot_big100_v_age.png'))
+
 
 #' Interesting! Looks like we're not globally going down in religiosity by age, 
 #' at least in the countries polled and the people sampled. Curious.
@@ -373,8 +483,20 @@ dataf_mature = dataf %>%
     filter(Age > 29)
 dataf_mature %>% 
     ggplot(aes(Age, Education)) +
-    geom_point() +
-    geom_smooth(method='lm', se=FALSE, color='turquoise4')
+    geom_point(color="#F57F17", alpha = 1/5) +
+    geom_smooth(method='lm', color='black') + 
+    labs (
+        title = "Age versus education level - Overall",
+        subtitle = "(>29 years)",
+        caption = "Darker circles indicate higher frequency"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.caption = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
+ggsave(file.path(out_dir, '02_plot_age_v_education.png'))
 
 #' Flat! Looks like the average amount of education isn't changing much (at 
 #' least among our samples)
@@ -385,7 +507,16 @@ dataf_mature %>%
 
 dataf %>% 
     ggplot(aes(x=BiG100)) + 
-    geom_histogram()
+    geom_histogram(binwidth = 5, fill = "#FBC02D") + 
+    labs (
+        title = "BiG score frequencies - Overall"
+    ) +
+    theme(
+        plot.title = element_text(hjust = 0.5),
+        panel.background = element_rect(fill="transparent")
+    )
+
+ggsave(file.path(out_dir, '02_plot_big100.png'))
 
 #' Ah, now that's a non-representative global sample! I suspect Finland is to
 #' blame.
@@ -395,88 +526,11 @@ dataf %>%
     ggplot(aes(x=BiG100)) + 
     geom_histogram(binwidth = 5)
 
-ggsave(file.path(out_dir, '02_plot_big100.png'), width = 6, height = 6, scale = 1.5)
+ggsave(file.path(out_dir, '02_plot_big100_sans_finland.png'))
 
 #' Much better, though still a bit secular to be globally representative. At 
 #' the very least, now it doesn't look like the researchers screened out 
 #' everyone who wasn't fully committed to belief or disbelief.
-
-#' 
-#' In fact, this probably hints at the non-generalizability of the people who 
-#' are responding to these studies. Education averages have steadily increased 
-#' for a while now, so it's clear that isn't captured here at all. This ought 
-#' not to be surprising to anyone who has ever run a study online (or on campus),
-#' but any demographic conclusions we want to draw from these studies need to 
-#' be carefully minded. Even my look into gender was ill-fated. What does this
-#' mean for the actual study that was done on this data? Fortunately, they are
-#' well aware of these issues and did some really clever statistical workarounds
-#' to get something that might be generalizably true (moral bias against 
-#' atheists). If found anything truly interesting in this EDA, I'd need to be
-#' sure to employ the same kinds of workarounds before I ran around claiming
-#' anything more than a few 'huh' moments.
-
-#' Summary
-#' 
-#' We found a curious culturally sensitive discrepancy between education and 
-#' SES, where even though education correlated with fewer errors and education
-#' correlated with higher SES, there was an apparent blowback where people who
-#' over-estimated their SES were especially likely to commit an error in 
-#' judgment on the assessment. This was not true in every country, though it
-#' was true in most. The places where it wasn't true were exactly aligned with
-#' our priors.
-#' 
-#' We also noted a small quirk in error rates across genders, but further 
-#' exploration showed this to be completely spurious. The overall results showed
-#' a powerfully zero difference in error rates across two genders (the 'other'
-#' gender results were not explored, as they were too few to reach significance.)
-#' 
-#' Further exploration ought to be done on the conjunction effect, though the 
-#' aggregate dataset here doesn't seem to yield anything strong enough to
-#' inspire its own new and detailed analysis. 
-#' 
-#' There were other datasets included in the supplementary content for the 
-#' study. 
-#' 
-#' Most interesting of these (to the author) is a survey ran on this 
-#' same model but with a different vignette and response. Instead of painting
-#' a picture of a serial killer and asking whether this person was an atheist or
-#' a believer, it paints a picture of a middle-aged man with a lot of free time
-#' and access to young boys, who abuses this privilege to abuse those boys. 
-#' It is then asked whether it's more likely that this man is a priest or whether
-#' he's a priest who is an atheist/a believer in God. The point was to determine
-#' whether the effect in the main study (atheists = immoral killers) was due to
-#' the association with killing and psychopathy instead of more general moral 
-#' violations. The expectation was that the common association between priests
-#' and sexual crimes against children would override at least part of the 
-#' association people have with religious people being morally upstanding.
-#' Instead, they found that people were just as likely to think the priest was
-#' just a closeted atheist if he indeed committed those heinous acts. In other 
-#' words, a priest who commits extreme moral infractions is no true believer.
-#' 
-#' This study represents something really interesting to me, as it seems to 
-#' suggest that the conjunction fallacy effect really does identify a strong
-#' bias that's acted out in real behavior. It's one thing to show that people
-#' (atheists included) think that atheists are over-represented among serial 
-#' killers--maybe they just have bad priors. It's quite another to find that
-#' something with reverse priors (priests are clearly expected to be highly
-#' religious) has those priors completely overwritten by the stronger effect
-#' of atheists being considered moral monsters of sorts, manifested by real
-#' responses gathered without suspicion.
-
-#+ summary_table
-# dataf %>% 
-#     summarize(across(everything(), mean)) %>% 
-#     kable(format = 'latex', digits = 2) %>% 
-#     write_lines(file.path(out_dir, '02_table.tex'))
-
-#' # Amazing plot #
-#' 
-
-#+ plot
-# ggplot(dataf, aes(x, y)) +
-#     geom_point()
-# 
-# ggsave(file.path(out_dir, '02_plot.png'), width = 6, height = 3, scale = 1.5)
 
 #' # Reproducibility #
 session_info()
